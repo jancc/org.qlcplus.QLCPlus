@@ -1,0 +1,46 @@
+id: org.qlcplus.QLCPlus
+runtime: org.kde.Platform
+runtime-version: '5.15-23.08'
+sdk: org.kde.Sdk
+command: qlcplus.sh
+finish-args:
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --device=dri
+modules:
+  - shared-modules/libusb/libusb.json
+  - name: libconfuse
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://github.com/libconfuse/libconfuse/releases/download/v3.3/confuse-3.3.tar.gz
+        sha256: 3a59ded20bc652eaa8e6261ab46f7e483bc13dad79263c15af42ecbb329707b8
+  - name: libftdi
+    buildsystem: cmake
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_INSTALL_LIBDIR=lib
+      - -DLIB_SUFFIX=
+    sources:
+      - type: archive
+        url: https://www.intra2net.com/en/developer/libftdi/download/libftdi1-1.5.tar.bz2
+        sha256: 7c7091e9c86196148bd41177b4590dccb1510bfe6cea5bf7407ff194482eb049
+  - name: qlcplus
+    buildsystem: qmake
+    config-opts:
+      - LIBS+=-L/app/lib
+      - LIBS+=-L/app/lib64
+    sources:
+      - type: archive
+        url: https://github.com/mcallegari/qlcplus/archive/refs/tags/QLC+_4.12.7.tar.gz
+        sha256: 6ad8c66860041a54064a22d951e2a76799feaa02821ca774ac0de4bba717ab91
+      - type: file
+        path: variables.pri
+  - name: qlcplus-wrapper
+    buildsystem: simple
+    build-commands:
+      - install -D qlcplus.sh /app/bin/qlcplus.sh
+    sources:
+      - type: file
+        path: qlcplus.sh
