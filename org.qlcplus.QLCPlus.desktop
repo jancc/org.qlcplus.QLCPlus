@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=QLC+
+Exec=qlcplus.sh
+Categories=Development;IDE;
+GenericName=Open-Source lighting console
+Icon=org.qlcplus.QLCPlus
+Keywords=qlcplus;qlc+;dmx;light;
+StartupNotify=true
+StartupWMClass=qlcplus
+Terminal=false
+Type=Application

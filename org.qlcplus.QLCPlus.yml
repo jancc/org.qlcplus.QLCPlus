@@ -5,9 +5,12 @@ sdk: org.kde.Sdk
 command: qlcplus.sh
 finish-args:
   - --share=ipc
+  - --share=network
   - --socket=fallback-x11
   - --socket=wayland
-  - --device=dri
+  - --socket=pulseaudio
+  - --device=all
+  - --filesystem=home
 modules:
   - shared-modules/libusb/libusb.json
   - name: libconfuse
@@ -33,14 +36,17 @@ modules:
       - LIBS+=-L/app/lib64
     sources:
       - type: archive
-        url: https://github.com/mcallegari/qlcplus/archive/refs/tags/QLC+_4.12.7.tar.gz
-        sha256: 6ad8c66860041a54064a22d951e2a76799feaa02821ca774ac0de4bba717ab91
+        url: https://github.com/mcallegari/qlcplus/archive/refs/tags/QLC+_4.13.0.tar.gz
+        sha256: 349b76640466f398a9a3a1b7bae997d49ba4964a57be0456fa69d093abe805f5
       - type: file
         path: variables.pri
   - name: qlcplus-wrapper
     buildsystem: simple
     build-commands:
       - install -D qlcplus.sh /app/bin/qlcplus.sh
+      - install -D -m644 -t ${FLATPAK_DEST}/share/applications/ ${FLATPAK_ID}.desktop
     sources:
       - type: file
         path: qlcplus.sh
+      - type: file
+        path: org.qlcplus.QLCPlus.desktop
