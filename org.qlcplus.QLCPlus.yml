@@ -1,6 +1,6 @@
 id: org.qlcplus.QLCPlus
 runtime: org.kde.Platform
-runtime-version: '5.15-23.08'
+runtime-version: '5.15-24.08'
 sdk: org.kde.Sdk
 command: qlcplus.sh
 finish-args:
@@ -36,10 +36,12 @@ modules:
       - LIBS+=-L/app/lib64
     sources:
       - type: archive
-        url: https://github.com/mcallegari/qlcplus/archive/refs/tags/QLC+_4.13.0.tar.gz
-        sha256: 349b76640466f398a9a3a1b7bae997d49ba4964a57be0456fa69d093abe805f5
+        url: https://github.com/mcallegari/qlcplus/archive/refs/tags/QLC+_4.14.3.tar.gz
+        sha256: 77d261f00936c784c8244a29a323c86df8a5e8d7bb76368504998856df851d09
       - type: file
         path: variables.pri
+    ensure-writable:
+      - /lib
   - name: qlcplus-wrapper
     buildsystem: simple
     build-commands:
